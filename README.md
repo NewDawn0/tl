@@ -18,6 +18,7 @@ Both the language codes and the full names are listed in the languages section o
 
 ## Installation
 ```bash
+cargo install --git https://github.com/NewDawn0/tl.git
 ```
 
 ## Programm info / Help menu
