@@ -1,10 +1,10 @@
-////// Imports && Setup //////
+//// Imports && Setup ////
 use reqwest;
 use tl;
 use std::env;
 use std::process;
 
-////// Static Help menus //////
+//// Static Help menus ////
 const HELP: &'static str = "Try 'tl --help' for more information";
 const HELPMSG: &'static str = "\x1b[1;32mNAME\x1b[0m
     \x1b[1;32mTL\x1b[0m
@@ -31,48 +31,74 @@ const HELPMSG: &'static str = "\x1b[1;32mNAME\x1b[0m
 \x1b[1;32mLANGUAGES\x1b[0m
 ";
 
-////// Main //////
+//// Main ////
 fn main() {
-    // get args
+    //// Set default values ////
+    let mut from = "auto";
+    let mut to = "en";
+    let text = "tl - Made by NewDawn0";
+
+    //// get args ////
     let mut args = env::args()
         .collect::<Vec<String>>();
+    let mut args_copy = env::args()
+        .collect::<Vec<String>>();
+    args_copy.remove(0);
     args.remove(0); // remove filename
 
     //// Parse args ////
-    match args.len() {
-        0 => {
-            println!("tl: Insufficient amount of arguments\n{}", HELP);
-            process::exit(1);
-        },
-        1 => match args[0].as_str() {
+    if args.len() == 0 {
+        println!("tl: Insufficient amount of arguments\n{}", HELP);
+        process::exit(1);
+    } else {
+        match args[0].as_str() {
             "-h" | "--help" => println!("{}", HELPMSG),
             &_ => {
-                println!("tl: Insufficient amount of arguments for translating\n{}", HELP);
-                process::exit(1)
+                let mut deletion_vector: Vec<usize> = Vec::new();
+                for (pos, arg) in args.iter().enumerate() {
+                    match arg.as_str() {
+                        "-f" | "--from" => {
+                            if args.len() >= pos+1 {
+                                from = match_lang(&args[pos+1]);
+                                deletion_vector.push(pos);
+                            } else {
+                                println!("Invalid amount of arguments\n{}", HELP);
+                                process::exit(1);
+                            }
+                        },
+                        "-t" | "--to" => {
+                            if args.len() >= pos+1 {
+                                to = match_lang(&args[pos+1]);
+                                deletion_vector.push(pos);
+                            } else {
+                                println!("Invalid amount of arguments\n{}", HELP);
+                                process::exit(1);
+                            }
+                        }
+                        _ => {}
+                    }
+                }
+                for del in deletion_vector.iter() {
+                    args_copy.remove(*del);
+                    args_copy.remove(*del);
+                }
+                //// Strore text arguments as &str to translate
+                let mut text = String::new();
+                for arg in args_copy.iter() {
+                    text.push_str(" ");
+                    text.push_str(&arg);
+                }
+                let text = rm_first_char(&text);
+                //let to: &str = match_lang("af");
+                println!("from: {}\nto: {}\ntext: {}", from, to, text);
+                //translate(&to, &from, &text);
             }
-        },
-        _ =>  {
-            println!("tl: Invalid ussage\n{}", HELP);
-            process::exit(1)
         }
     }
     process::exit(0);
-    let to: &String = &args[1].to_owned();
-    let from: &str = "auto";
-    let mode: &String = &args[0].to_owned();
-    println!("{}", to);
-
-    // Collect string to translate as single string
-    let mut text = String::new();
-    args.remove(0);
-    args.remove(0);
-    for arg in args.iter() {
-        text.push_str(" ");
-        text.push_str(&arg);
-    }
-    let text = rm_first_char(&text);
 }
 
+//// Match language to language code or language name ////
 fn match_lang(str: &str) -> &str {
     match str.to_lowercase().as_str() {
         "af" | "afrikaans" => "af",
@@ -214,18 +240,19 @@ fn match_lang(str: &str) -> &str {
     }
 }
 
-///// Remove first character //////
+//// Remove first character ////
 fn rm_first_char(val: &str) -> &str {
     let mut chars = val.chars();
     chars.next();
     chars.as_str()
 }
 
-////// Translate //////
+//// Translate ////
 fn translate(to: &str, from: &str, text: &str) {
     parse(fetch(text, from, to))
 }
-// Fetch page
+
+//// Fetch page ////
 fn fetch (text: &str, from: &str, to: &str) -> Result<String, String> {
     let url = format!("https://translate.google.com/m?tl={}&sl={}&q={}", to, from, text);
     match reqwest::blocking::get(url) {
@@ -236,7 +263,8 @@ fn fetch (text: &str, from: &str, to: &str) -> Result<String, String> {
         Err(err) => return Err(err.to_string())
     }
 }
-// Parse fetched
+
+//// Parse fetched ////
 fn parse(result: Result<String, String>) {
     match result {
         Ok(body) => match tl::parse(&body.to_owned()).get_elements_by_class_name("result-container") {
@@ -249,4 +277,3 @@ fn parse(result: Result<String, String>) {
         Err(err) => println!("{}", err),
     }
 }
-
