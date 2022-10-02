@@ -16,6 +16,10 @@ tl Das is ein deutscher Satz --from german --to japanese
 TL accepts both language iso codes aswell as language names</br>
 Both the language codes and the full names are listed in the languages section of the Helpmenu which can be show with `tl -h` or `tl --help`
 
+## Installation
+```bash
+```
+
 ## Programm info / Help menu
 ```bash
 NAME
@@ -85,17 +89,6 @@ LANGUAGES
     X:  xh - xhosa
     Y:  yi - yiddish; yo - yoruba
     Z:  zu - zulu;
-```
-
-
-## Installation
-For macOs
-```bash
-cargo build && mv target/debug/tl /usr/local/bin
-```
-For Linux
-```bash
-cargo build && sudo mv target/debug/tl /usr/local/bin
 ```
 
 ## Changelog
