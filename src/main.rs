@@ -29,14 +29,57 @@ const HELPMSG: &'static str = "\x1b[1;32mNAME\x1b[0m
     > I am not you. You are not me.
 
 \x1b[1;32mLANGUAGES\x1b[0m
+    \x1b[0;34mA:\x1b[0m  af - afrikaans;  sq - albanian; am - amharic; ar - arabic;
+        hy - armenian; as - assamese; ay - aymara
+    \x1b[0;34mB:\x1b[0m  bm - bambara; eu - basque; be - belarusian; bn - bengali
+        bho - bhojpuri; bs - bosnian; bg - bulgarian
+    \x1b[0;34mC:\x1b[0m  ca - catalan; ceb - cebuano; ny - chichewa;
+        zh-CN - chinese simplified; zh-TW - chinese traditional;
+        co - corsican; hr - croatian; cs - czech
+    \x1b[0;34mD:\x1b[0m  da - danish; dv - dhivehi; doi - dogri; nl - dutch
+    \x1b[0;34mE:\x1b[0m  en - english; eo - esperanto; et - estonian; ee - ewe
+    \x1b[0;34mF:\x1b[0m  fil - filipino; fi - finnish; fr - french; fy - frisian
+    \x1b[0;34mG:\x1b[0m  gl - galician; ka - georgian; de - german; el - greek;
+        gn - guarani; gu - gujarati
+    \x1b[0;34mH:\x1b[0m  ht - haitian; ha - hausa; haw - hawaiian; he - hebrew;
+        hi - hindi; hmn -  hmong; hun -  hungarian
+    \x1b[0;34mI:\x1b[0m  isl - icelandic; ig - igbo; ilo - ilocano;
+        in - indonesian; ga - irish; it - italian
+    \x1b[0;34mJ:\x1b[0m  ja - japanese; jv -  javanese
+    \x1b[0;34mK:\x1b[0m  kn - kannada; kk - kazakh; km - khmer; rw - kinyarwanda;
+        kok - konkani; ko - korean; kri - krio; ku - kurdish kurmanji;
+        ckb - kurdish sorani; ky - kyrgyz
+    \x1b[0;34mL:\x1b[0m  lo - lao; lat - latin; lv - latvian; ln - lingala;
+        lt - lithuanian; lg - luganda; lb - luxembourgish
+    \x1b[0;34mM:\x1b[0m  mk - macedonian; mai - maithili; mg - malagasy; ms - malay;
+        ml - malayalam; mt - maltese; mi - maori; mr - marathi;
+        mni - meiteilon; lus - mizo; mn - mongolian; my - myanmar
+    \x1b[0;34mN:\x1b[0m  ne - nepali; no - norwegian
+    \x1b[0;34mO:\x1b[0m  or - odia; om - oromo
+    \x1b[0;34mP:\x1b[0m  ps - pashto; fa - persian; pol - polish
+        pt - portuguese; pa - punjabi
+    \x1b[0;34mQ:\x1b[0m  qwc - quechua
+    \x1b[0;34mR:\x1b[0m  ro - romanian; ru - russian
+    \x1b[0;34mJ:\x1b[0m  sm - samoan; sa - sanskrit; gd - scots gaelic;
+    \x1b[0;34mS:\x1b[0m  nso - sepedi; sr - serbian; st - sesotho; sn - shona;
+        sd - sindhi; si - sinhala; sk - slovak; sl - slovenian;
+        so - somali; es - spanish; sun - sundanese; sw - swahili;
+        swe - swedish
+    \x1b[0;34mT:\x1b[0m  tg - tajik; ta - tamil; tat -   tatar; te - telugu; tha - thai
+        ti - tigrinya; ts - tsonga; tr - turkish; tk - turkmen; tw - twi
+    \x1b[0;34mU:\x1b[0m  uk - ukrainian; ur - urdu; ug - uyghur; uz - uzbek
+    \x1b[0;34mV:\x1b[0m  vi - vietnamese
+    \x1b[0;34mW:\x1b[0m  cy - welsh
+    \x1b[0;34mX:\x1b[0m  xh - xhosa
+    \x1b[0;34mY:\x1b[0m  yi - yiddish; yo - yoruba
+    \x1b[0;34mZ:\x1b[0m  zu - zulu;
 ";
 
-//// Main ////
+///||/ Main ////
 fn main() {
     //// Set default values ////
     let mut from = "auto";
     let mut to = "en";
-    let text = "tl - Made by NewDawn0";
 
     //// get args ////
     let mut args = env::args()
