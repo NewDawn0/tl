@@ -89,9 +89,7 @@ fn main() {
                     text.push_str(&arg);
                 }
                 let text = rm_first_char(&text);
-                //let to: &str = match_lang("af");
-                println!("from: {}\nto: {}\ntext: {}", from, to, text);
-                //translate(&to, &from, &text);
+                translate(&to, &from, &text);
             }
         }
     }
