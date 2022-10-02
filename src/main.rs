@@ -82,10 +82,10 @@ fn main() {
     let mut to = "en";
 
     //// get args ////
-    let mut args = env::args()
+    let mut args = env::args() // store args
         .collect::<Vec<String>>();
     let mut args_copy = env::args()
-        .collect::<Vec<String>>();
+        .collect::<Vec<String>>(); // store copy of arguments for text
     args_copy.remove(0);
     args.remove(0); // remove filename
 
@@ -121,7 +121,7 @@ fn main() {
                         _ => {}
                     }
                 }
-                for del in deletion_vector.iter() {
+                for del in deletion_vector.iter().rev() {
                     args_copy.remove(*del);
                     args_copy.remove(*del);
                 }
