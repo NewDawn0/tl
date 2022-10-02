@@ -7,7 +7,7 @@ use std::process;
 //// Static Help menus ////
 const HELP: &'static str = "Try 'tl --help' for more information";
 const HELPMSG: &'static str = "\x1b[1;32mNAME\x1b[0m
-    \x1b[1;32mTL\x1b[0m
+    \x1b[1;32mTL\x1b[0m (by NewDawn0)
     \x1b[1;32mT\x1b[0mrans\x1b[1;32mL\x1b[0mate - A tool to translate sentences
 
 \x1b[1;32mSYNOPSIS\x1b[0m
@@ -25,8 +25,8 @@ const HELPMSG: &'static str = "\x1b[1;32mNAME\x1b[0m
     \x1b[0;34m-to\x1b[0;33m <lang>\x1b[0m     set the target language (defaults to english if not provided)
 
 \x1b[1;32mEXAMPLE\x1b[0m
-    $ \x1b[1;32mtl\x1b[0m en Mi estas ne vin. Vi estas ne min.
-    > I am not you. You are not me.
+    $ \x1b[1;32mtl\x1b[0m TL - Rust で NeoVim を使用して NewDawn0 によって作成されました
+    > TL - Created by NewDawn0 using NeoVim in Rust
 
 \x1b[1;32mLANGUAGES\x1b[0m
     \x1b[0;34mA:\x1b[0m  af - afrikaans;  sq - albanian; am - amharic; ar - arabic;
