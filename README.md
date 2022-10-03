@@ -93,8 +93,9 @@ LANGUAGES
 ```
 
 ## Changelog
+- **v0.1.5** Fixed apostrophe bug in french
 - **v0.1.4** Fixed argument parser
 - **v0.1.3** Added new language selection mode
 - **v0.1.2** Added an improved argument parser
-- **v0.1.1** Bugfix
+- **v0.1.1** Minor Bugfixes
 - **v0.1.0** Added initial translator
