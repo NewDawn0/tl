@@ -309,7 +309,13 @@ fn fetch (text: &str, from: &str, to: &str) -> Result<String, String> {
 fn parse(result: Result<String, String>) {
     match result {
         Ok(body) => match tl::parse(&body.to_owned()).get_elements_by_class_name("result-container") {
-            Some(element) => println!("{}", element[0].inner_text().into_owned()),
+            Some(element) => {
+                // fix french special character bug
+                // For some reason the ' character gets replaces with this &#39; escape sequence
+                let translated = element[0].inner_text().into_owned();
+                let corrected_translation = translated.replace("&#39;", "'");
+                println!("{}", corrected_translation);
+            },
             None => {
                 let error = String::from("Error whilst parsing text");
                 println!("{}", error);
