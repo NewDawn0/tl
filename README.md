@@ -1,27 +1,32 @@
-# tl
-A simple translator written in Rust
+# TL - TransLator
+**A simple translator written in Rust**
 
-## Ussage
+## Ussage and Exampes
+Basic ussage
 ```bash
 tl <options> phrase
 ```
-Translating a phrase from german into japanese
+To set the target language, simply add the `-t` or `--to` flag and either the language ISO code or the language name to the arguments. Both the language ISO codes and names can be shown when running `tl --help` and scrolling down to the language section
 ```bash
-tl Das is ein deutscher Satz -f de -t ja
+tl This phrase will be translated to japanese -t ja
 ```
-Or
+Since tl accepts both ISO codes aswell as the language names the below example works aswell.
 ```bash
-tl Das is ein deutscher Satz --from german --to japanese
+tl This phrase will be translated to japanese -t japanese
 ```
-TL accepts both language iso codes aswell as language names</br>
-Both the language codes and the full names are listed in the languages section of the Helpmenu which can be show with `tl -h` or `tl --help`
+To set the origin language, simply provide the "-f" or "--from" flag and again either the language ISO code or name.
+Note that in order to translate to English we don't have to set the target language as it is set to English by default nor do we have to set the origin language as it is set to google's automatic recognition by default
+
+Arguments like the origin and the target language can be provided anywhere in the arguments, they don't have to specifically be at the beginning or end, whether that's a good or a bad thing is up to you to decide
 
 ## Installation
+To install it simply run the following command
 ```bash
 cargo install --git https://github.com/NewDawn0/tl.git
 ```
+To update the programm run the same command
 
-## Programm info / Help menu
+## Programm description courtesy of the built in --help flag
 ```bash
 NAME
     TL (by NewDawn0)
