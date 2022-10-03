@@ -1,8 +1,8 @@
 # TL - TransLator
 **A simple translator written in Rust**
 
-## Ussage and Exampes
-Basic ussage
+## Usage and Exampes
+Basic usage
 ```bash
 tl <options> phrase
 ```
