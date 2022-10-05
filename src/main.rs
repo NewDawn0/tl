@@ -75,7 +75,7 @@ const HELPMSG: &'static str = "\x1b[1;32mNAME\x1b[0m
     \x1b[0;34mZ:\x1b[0m  zu - zulu;
 ";
 
-///||/ Main ////
+//// Main ////
 fn main() {
     //// Set default values ////
     let mut from = "auto";
