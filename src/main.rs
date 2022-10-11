@@ -11,7 +11,7 @@ const HELPMSG: &'static str = "\x1b[1;32mNAME\x1b[0m
     \x1b[1;32mT\x1b[0mrans\x1b[1;32mL\x1b[0mate - A tool to translate sentences
 
 \x1b[1;32mSYNOPSIS\x1b[0m
-    \x1b[1;32mtl\x1b[0m [\x1b[0;34m-h\x1b[0m | \x1b[0;34m--help\x1b[0m] [<language or language code> <string(s)> | <language or language code> <string(s)>] 
+    \x1b[1;32mtl\x1b[0m [\x1b[0;34m-h\x1b[0m | \x1b[0;34m--help\x1b[0m] [ \x1b[0;34m-t\x1b[0m | \x1b[0;34m--target\x1b[0m] [ \x1b[0;34m-f\x1b[0m |  \x1b[0;34m--from\x1b[0m]
 
 \x1b[1;32mDESCRIPTION\x1b[0m
     A Tool that translates text using goole translate
