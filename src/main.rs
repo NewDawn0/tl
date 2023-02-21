@@ -1,8 +1,8 @@
 //// Imports && Setup ////
 use reqwest;
+use html_escape::decode_html_entities;
+use std::{env, process::exit};
 use tl;
-use std::env;
-use std::process;
 
 //// Static Help menus ////
 const HELP: &'static str = "Try 'tl --help' for more information";
@@ -82,17 +82,15 @@ fn main() {
     let mut to = "en";
 
     //// get args ////
-    let mut args = env::args() // store args
-        .collect::<Vec<String>>();
-    let mut args_copy = env::args()
-        .collect::<Vec<String>>(); // store copy of arguments for text
+    let mut args = env::args().collect::<Vec<String>>(); // store args
+    let mut args_copy = env::args().collect::<Vec<String>>(); // store copy of arguments for text
     args_copy.remove(0);
     args.remove(0); // remove filename
 
     //// Parse args ////
     if args.len() == 0 {
         println!("tl: Insufficient amount of arguments\n{}", HELP);
-        process::exit(1);
+        exit(1);
     } else {
         match args[0].as_str() {
             "-h" | "--help" => println!("{}", HELPMSG),
@@ -106,7 +104,7 @@ fn main() {
                                 deletion_vector.push(pos);
                             } else {
                                 println!("Invalid amount of arguments\n{}", HELP);
-                                process::exit(1);
+                                exit(1);
                             }
                         },
                         "-t" | "--to" => {
@@ -115,7 +113,7 @@ fn main() {
                                 deletion_vector.push(pos);
                             } else {
                                 println!("Invalid amount of arguments\n{}", HELP);
-                                process::exit(1);
+                                exit(1);
                             }
                         }
                         _ => {}
@@ -136,7 +134,7 @@ fn main() {
             }
         }
     }
-    process::exit(0);
+    exit(0);
 }
 
 //// Match language to language code or language name ////
@@ -276,7 +274,7 @@ fn match_lang(str: &str) -> &str {
         "zu" | "zulu" => "zu",
         __ => {
             println!("tl: Invalid language\nFind languages and language codes in the Help menu\n{}", HELP);
-            process::exit(1)
+            exit(1)
         }
     }
 }
@@ -310,11 +308,8 @@ fn parse(result: Result<String, String>) {
     match result {
         Ok(body) => match tl::parse(&body.to_owned()).get_elements_by_class_name("result-container") {
             Some(element) => {
-                // fix french special character bug
-                // For some reason the ' character gets replaces with this &#39; escape sequence
-                let translated = element[0].inner_text().into_owned();
-                let corrected_translation = translated.replace("&#39;", "'");
-                println!("{}", corrected_translation);
+                // decoding url encoding
+                println!("{}", decode_html_entities(&element[0].inner_text()))
             },
             None => {
                 let error = String::from("Error whilst parsing text");
