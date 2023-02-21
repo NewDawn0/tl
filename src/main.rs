@@ -139,27 +139,40 @@ fn main() {
     let args = env::args().skip(1).collect::<Vec<String>>(); // store args
     let mut prompt = String::new();
     
-    for (index, arg) in args.iter().enumerate() {
+    let mut index: usize = 0;
+    while index < args.len() {
+        let arg = &args[index];
         match arg.as_str() {
             "-h" | "--help" => println!("{}", HELPMSG),
             "-t" | "--to" => {
-                if index > args.len() {
+                if index+1 < args.len() {
                     to = args[index+1].as_str();
+                    index += 1;
                 } else {
                     *EXIT_CODE.lock().unwrap() = 1;
-                    *ERR_MSG.lock().unwrap() = format!("Provide a language for {}", arg)
+                    *ERR_MSG.lock().unwrap() = format!("Provide a language for {}", arg);
                 }
             },
             "-f" | "--from" => {
-                if index > args.len() {
+                if index+1 < args.len() {
                     from = args[index+1].as_str();
+                    index += 1;
                 } else {
                     *EXIT_CODE.lock().unwrap() = 1;
-                    *ERR_MSG.lock().unwrap() = format!("Provide a language for {}", arg)
+                    *ERR_MSG.lock().unwrap() = format!("Provide a language for {}", arg);
                 }
             },
             val => prompt.push_str(format!("{} ", val).as_str())
         }
+        index += 1;
+    }
+    if prompt.is_empty() {
+        *EXIT_CODE.lock().unwrap() = 1;
+        *ERR_MSG.lock().unwrap() = format!("Provide a prompt");
+    }
+    if !ERR_MSG.lock().unwrap().is_empty() {
+        eprintln!("{}{}Error{} :: {}", COLOURS.bold, COLOURS.red, COLOURS.reset, *ERR_MSG.lock().unwrap());
+        exit(*EXIT_CODE.lock().unwrap())
     }
     prompt.pop(); // remove last whitespace
 
@@ -173,7 +186,7 @@ fn main() {
             }
         }
     }
-match match_lang(&to) {
+    match match_lang(&to) {
         Ok(lang) => to = lang,
         Err(e) => {
             eprintln!("{}{}Error{} :: {}", COLOURS.bold, COLOURS.red, COLOURS.reset, e);
