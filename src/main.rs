@@ -143,7 +143,7 @@ fn main() {
     while index < args.len() {
         let arg = &args[index];
         match arg.as_str() {
-            "-h" | "--help" => println!("{}", HELPMSG),
+            "-h" | "--help" => {println!("{}", HELPMSG); exit(0)},
             "-t" | "--to" => {
                 if index+1 < args.len() {
                     to = args[index+1].as_str();
