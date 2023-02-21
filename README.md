@@ -98,6 +98,7 @@ LANGUAGES
 ```
 
 ## Changelog
+- **v0.1.6** Escaped all encodings implicitly
 - **v0.1.5** Fixed apostrophe bug in french
 - **v0.1.4** Fixed argument parser
 - **v0.1.3** Added new language selection mode
