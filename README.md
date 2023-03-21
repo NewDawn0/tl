@@ -23,7 +23,10 @@ Arguments like the origin and the target language can be provided anywhere in th
 ### Binary package
 To install the binary version run
 ```bash
-cargo install --git https://github.com/NewDawn0/tl.git
+git clone https://github.com/NewDawn0/tl.git
+cd tl
+cargo build --release
+sudo mv target/release/tl /usr/local/bin/
 ```
 ### Add it as a library to your project
 To add the ability to translate words/sentences to your rust project, run
