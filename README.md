@@ -1,7 +1,7 @@
 # TL - TransLator
-**A simple translator written in Rust**
+**A simple translator which is written in Rust**
 
-## Usage and Exampes
+## Usage and examples
 Basic usage
 ```bash
 tl <options> phrase
@@ -10,23 +10,28 @@ To set the target language, simply add the `-t` or `--to` flag and either the la
 ```bash
 tl This phrase will be translated to japanese -t ja
 ```
-Since tl accepts both ISO codes aswell as the language names the below example works aswell.
+Since tl accepts both ISO codes and language names the below example works as well.
 ```bash
 tl This phrase will be translated to japanese -t japanese
 ```
 To set the origin language, simply provide the "-f" or "--from" flag and again either the language ISO code or name.
-Note that in order to translate to English we don't have to set the target language as it is set to English by default nor do we have to set the origin language as it is set to google's automatic recognition by default
+Note that to translate to English we don't have to set the target language as it is set to English by default nor do we have to set the origin language as it is set to Google's automatic recognition by default
 
 Arguments like the origin and the target language can be provided anywhere in the arguments, they don't have to specifically be at the beginning or end, whether that's a good or a bad thing is up to you to decide
 
 ## Installation
-To install it simply run the following command
+### Binary package
+To install the binary version run
 ```bash
 cargo install --git https://github.com/NewDawn0/tl.git
 ```
-To update the programm run the same command
+### Add it as a library to your project
+To add the ability to translate words/sentences to your rust project, run
+```bash
+cargo add --git https://github.com/NewDawn0/tl.git
+```
 
-## Programm description courtesy of the built in --help flag
+## Program description courtesy of the built-in --help flag
 ```bash
 NAME
     TL (by NewDawn0)
@@ -98,8 +103,9 @@ LANGUAGES
 ```
 
 ## Changelog
+- **0v.1.7** Added library API
 - **v0.1.6** Escaped all encodings implicitly
-- **v0.1.5** Fixed apostrophe bug in french
+- **v0.1.5** Fixed apostrophe bug in French
 - **v0.1.4** Fixed argument parser
 - **v0.1.3** Added new language selection mode
 - **v0.1.2** Added an improved argument parser
