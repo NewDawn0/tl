@@ -33,7 +33,11 @@
 /* Imports && Setup */
 mod shared;
 use shared::*;
-use std::{ fs::File, io::Read, process::exit };
+use std::{
+    fs::File,
+    io::{BufRead, BufReader},
+    process::exit
+};
 
 /* Main */
 fn main() {
@@ -122,11 +126,15 @@ fn main() {
 
 fn read_file(path: &str) -> String {
     match File::open(path) {
-        Ok(mut file) => {
-            let mut content = String::new();
-            file.read_to_string(&mut content).expect("Could not read file contents");
-            content
-        },
+        Ok(file) => {
+            let mut ret = String::new();
+            let buf = BufReader::new(file).lines();
+            for line in buf {
+                let line = line.unwrap();
+                ret.push_str(&(line + "\n "));
+            }
+            ret
+        }
         Err(e) => {
             eprintln!("{}{}Error{} :: Error opening file '{}': {}", COLOURS.bold, COLOURS.red, COLOURS.reset, path, e);
             exit(1);
