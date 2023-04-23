@@ -40,6 +40,7 @@ https://github.com/NewDawn0/tl
     {}--to{}        sets the target language    [{}default: english{}]
     {}-f{}          sets the origin language    [{}default: auto detect{}]
     {}--from{}      sets the origin language    [{}default: auto detect{}]
+    {}--file{}      Translate text from a file
 
 {}{}EXAMPLE{}
     {}$ {}tl{} TL - Rust で NeoVim を使用して NewDawn0 によって作成されました
@@ -90,8 +91,9 @@ https://github.com/NewDawn0/tl
     {}X:{}  xh - xhosa
     {}Y:{}  yi - yiddish; yo - yoruba
     {}Z:{}  zu - zulu",
-COLOURS.bold, COLOURS.purple, COLOURS.reset, COLOURS.purple, COLOURS.bold, COLOURS.purple, COLOURS.reset, COLOURS.purple, COLOURS.bold, COLOURS.purple,
-COLOURS.reset, COLOURS.blue, COLOURS.reset, COLOURS.blue, COLOURS.reset, COLOURS.blue,
+COLOURS.bold, COLOURS.purple, COLOURS.reset, COLOURS.purple, COLOURS.bold, COLOURS.purple,
+COLOURS.reset, COLOURS.purple, COLOURS.bold, COLOURS.purple, COLOURS.reset, COLOURS.cyan,
+COLOURS.reset, COLOURS.cyan, COLOURS.reset, COLOURS.cyan, COLOURS.reset, COLOURS.blue,
 COLOURS.reset, COLOURS.cyan, COLOURS.reset, COLOURS.blue, COLOURS.reset, COLOURS.cyan,
 COLOURS.reset, COLOURS.blue, COLOURS.reset, COLOURS.cyan, COLOURS.reset, COLOURS.blue,
 COLOURS.reset, COLOURS.cyan, COLOURS.reset, COLOURS.bold, COLOURS.purple, COLOURS.reset,
@@ -255,7 +257,7 @@ pub fn match_lang(id: &str) -> Result<&str, String> {
  * @PARAM from: &str
  * @PARAM to: &str
  * @RVAL: Result<String, String> */
-pub fn fetch (text: &str, from: &str, to: &str) -> Result<String, String> {
+pub fn fetch(text: &str, from: &str, to: &str) -> Result<String, String> {
     let url = format!("https://translate.google.com/m?tl={}&sl={}&q={}", to, from, text);
     match get(url) {
         Ok(response) => match response.text() {

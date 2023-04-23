@@ -38,10 +38,12 @@
 
 /* Imports */
 mod shared;
+use std::fmt::{self, Display, Formatter};
 use shared::*;
 
 /// Lang enum
 /// The lang enum implements all translatable languages
+#[derive(Debug)]
 pub enum Lang {
     Auto,
     Af, Afrikaans,
@@ -176,6 +178,12 @@ pub enum Lang {
     Yi, Yiddish,
     Yo, Yoruba,
     Zu, Zulu
+}
+
+impl Display for Lang {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        unimplemented!()
+    }
 }
 
 /* fn map_lang: Maps the lang enum to the language code
@@ -315,7 +323,8 @@ fn map_lang(language: &Lang) -> &str {
         Lang::Xh | Lang::Xhosa => "xh",
         Lang::Yi | Lang::Yiddish => "yi",
         Lang::Yo | Lang::Yoruba => "yo",
-        Lang::Zu | Lang::Zulu => "zu"
+        Lang::Zu | Lang::Zulu => "zu",
+        lang => panic!("'{}' is not a valid language", lang)
     }
 }
 
@@ -330,15 +339,23 @@ fn map_lang(language: &Lang) -> &str {
 ///
 /// 
 /// # Example
-/// use tl_lib;
+/// use tl_lib::{translate, Lang}
+///
+/// fn main() -> ! {
+///     let prompt = String::from("Hello world!")
+///     let origin = Lang::Auto;
+///     let target = Lang::German;
+///     let translation = translate(prompt, origin, target);
+///
+///     match translation {
+///         Err(e)  => eprintln!("{}", e),
+///         Ok(res) => println!("{}", res) // Yields: Hallo welt!
+///     }
+/// }
 ///
 pub fn translate(prompt: String, origin: Lang, target: Lang) -> Result<String, String> {
     let origin_lang = map_lang(&origin);
     let mut target_lang = map_lang(&target);
-    match target {
-        Lang::Auto => target_lang = "auto",
-        _ => {}
-    }
     match parse(fetch(&prompt, &origin_lang, &target_lang)) {
         Ok(res) => Ok(res),
         Err(e) => Err(e)

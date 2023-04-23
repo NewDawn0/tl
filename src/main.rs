@@ -33,6 +33,7 @@
 /* Imports && Setup */
 mod shared;
 use shared::*;
+use std::{ fs::File, io::Read, process::exit };
 
 /* Main */
 fn main() {
@@ -65,6 +66,15 @@ fn main() {
                 } else {
                     *EXIT_CODE.lock().unwrap() = 1;
                     *ERR_MSG.lock().unwrap() = format!("Provide a language for {}", arg);
+                }
+            },
+            "--file" => {
+                if index+1 < args.len() {
+                    prompt = read_file(args[index+1].as_str());
+                    index += 1;
+                } else {
+                    *EXIT_CODE.lock().unwrap() = 1;
+                    *ERR_MSG.lock().unwrap() = format!("Provide a file for {}", arg);
                 }
             },
             val => prompt.push_str(format!("{} ", val).as_str())
@@ -107,5 +117,19 @@ fn main() {
     }
 
     // Parse args
-    std::process::exit(*EXIT_CODE.lock().unwrap())
+    exit(*EXIT_CODE.lock().unwrap())
+}
+
+fn read_file(path: &str) -> String {
+    match File::open(path) {
+        Ok(mut file) => {
+            let mut content = String::new();
+            file.read_to_string(&mut content).expect("Could not read file contents");
+            content
+        },
+        Err(e) => {
+            eprintln!("{}{}Error{} :: Error opening file '{}': {}", COLOURS.bold, COLOURS.red, COLOURS.reset, path, e);
+            exit(1);
+        }
+    }
 }
