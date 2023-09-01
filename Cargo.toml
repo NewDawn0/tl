@@ -1,6 +1,6 @@
 [package]
 name = "tl"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2021"
 authors = ["NewDawn0 (Tom)"]
 license = "MIT"
@@ -9,6 +9,7 @@ categories = ["command-line-utilities"]
 
 [dependencies]
 const_format = "0.2.30"
+enum-iterator = "1.4.1"
 html-escape = "0.2.13"
 reqwest = { version = "0.11.4", features = ["blocking"] }
 tl = "0.2.1"
