@@ -9,9 +9,9 @@ categories = ["command-line-utilities"]
 
 [dependencies]
 const_format = "0.2.30"
-enum-iterator = "1.4.1"
 html-escape = "0.2.13"
 reqwest = { version = "0.11.4", features = ["blocking"] }
+strum = { version = "0.25.0", features = ["derive"] }
 tl = "0.2.1"
 
 [lib]

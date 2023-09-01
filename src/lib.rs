@@ -43,7 +43,7 @@ use std::fmt::{self, Display, Formatter};
 
 /// Lang enum
 /// The lang enum implements all translatable languages
-#[derive(Debug, PartialEq, Eq, EnumIter)]
+#[derive(Debug, PartialEq, Eq, AsRefStr)]
 pub enum Lang {
     Auto,
     Af,
