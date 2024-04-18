@@ -16,8 +16,8 @@
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the follwing conditions:
- * 
+ * furnished to do so, subject to the following conditions:
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
  *
@@ -36,7 +36,7 @@ use shared::*;
 use std::{
     fs::File,
     io::{BufRead, BufReader},
-    process::exit
+    process::exit,
 };
 
 /* Main */
@@ -48,40 +48,43 @@ fn main() {
     // Parse arguments
     let args = std::env::args().skip(1).collect::<Vec<String>>(); // store args
     let mut prompt = String::new();
-    
+
     let mut index: usize = 0;
     while index < args.len() {
         let arg = &args[index];
         match arg.as_str() {
-            "-h" | "--help" => {println!("{}", HELPMSG); std::process::exit(0)},
+            "-h" | "--help" => {
+                println!("{}", HELPMSG);
+                std::process::exit(0)
+            }
             "-t" | "--to" => {
-                if index+1 < args.len() {
-                    to = args[index+1].as_str();
+                if index + 1 < args.len() {
+                    to = args[index + 1].as_str();
                     index += 1;
                 } else {
                     *EXIT_CODE.lock().unwrap() = 1;
                     *ERR_MSG.lock().unwrap() = format!("Provide a language for {}", arg);
                 }
-            },
+            }
             "-f" | "--from" => {
-                if index+1 < args.len() {
-                    from = args[index+1].as_str();
+                if index + 1 < args.len() {
+                    from = args[index + 1].as_str();
                     index += 1;
                 } else {
                     *EXIT_CODE.lock().unwrap() = 1;
                     *ERR_MSG.lock().unwrap() = format!("Provide a language for {}", arg);
                 }
-            },
+            }
             "--file" => {
-                if index+1 < args.len() {
-                    prompt = read_file(args[index+1].as_str());
+                if index + 1 < args.len() {
+                    prompt = read_file(args[index + 1].as_str());
                     index += 1;
                 } else {
                     *EXIT_CODE.lock().unwrap() = 1;
                     *ERR_MSG.lock().unwrap() = format!("Provide a file for {}", arg);
                 }
-            },
-            val => prompt.push_str(format!("{} ", val).as_str())
+            }
+            val => prompt.push_str(format!("{} ", val).as_str()),
         }
         index += 1;
     }
@@ -90,7 +93,13 @@ fn main() {
         *ERR_MSG.lock().unwrap() = format!("Provide a prompt");
     }
     if !ERR_MSG.lock().unwrap().is_empty() {
-        eprintln!("{}{}Error{} :: {}", COLOURS.bold, COLOURS.red, COLOURS.reset, *ERR_MSG.lock().unwrap());
+        eprintln!(
+            "{}{}Error{} :: {}",
+            COLOURS.bold,
+            COLOURS.red,
+            COLOURS.reset,
+            *ERR_MSG.lock().unwrap()
+        );
         std::process::exit(*EXIT_CODE.lock().unwrap())
     }
     prompt.pop(); // remove last whitespace
@@ -100,7 +109,10 @@ fn main() {
         match match_lang(&from) {
             Ok(lang) => from = lang,
             Err(e) => {
-                eprintln!("{}{}Error{} :: {}", COLOURS.bold, COLOURS.red, COLOURS.reset, e);
+                eprintln!(
+                    "{}{}Error{} :: {}",
+                    COLOURS.bold, COLOURS.red, COLOURS.reset, e
+                );
                 eprintln!("{}", HELP);
             }
         }
@@ -108,14 +120,20 @@ fn main() {
     match match_lang(&to) {
         Ok(lang) => to = lang,
         Err(e) => {
-            eprintln!("{}{}Error{} :: {}", COLOURS.bold, COLOURS.red, COLOURS.reset, e);
+            eprintln!(
+                "{}{}Error{} :: {}",
+                COLOURS.bold, COLOURS.red, COLOURS.reset, e
+            );
             eprintln!("{}", HELP);
         }
     }
     match parse(fetch(&prompt, &from, &to)) {
         Ok(text) => println!("{}", text),
         Err(e) => {
-            eprintln!("{}{}Error{} :: {}", COLOURS.bold, COLOURS.red, COLOURS.reset, e);
+            eprintln!(
+                "{}{}Error{} :: {}",
+                COLOURS.bold, COLOURS.red, COLOURS.reset, e
+            );
             eprintln!("{}", HELP);
         }
     }
@@ -136,7 +154,10 @@ fn read_file(path: &str) -> String {
             ret
         }
         Err(e) => {
-            eprintln!("{}{}Error{} :: Error opening file '{}': {}", COLOURS.bold, COLOURS.red, COLOURS.reset, path, e);
+            eprintln!(
+                "{}{}Error{} :: Error opening file '{}': {}",
+                COLOURS.bold, COLOURS.red, COLOURS.reset, path, e
+            );
             exit(1);
         }
     }
