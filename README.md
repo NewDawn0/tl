@@ -20,19 +20,46 @@ Note that to translate to English we don't have to set the target language as it
 Arguments like the origin and the target language can be provided anywhere in the arguments, they don't have to specifically be at the beginning or end, whether that's a good or a bad thing is up to you to decide
 
 ## Installation
-### Binary package
-To install the binary version run
+### Install using Cargo
 ```bash
-git clone https://github.com/NewDawn0/tl.git
-cd tl
-cargo build --release
-sudo mv target/release/tl /usr/local/bin/
+cargo install --git https://github.com/NewDawn0/tl
 ```
-### Add it as a library to your project
-To add the ability to translate words/sentences to your rust project, run
+### Install using Nix
+#### Imperatively
 ```bash
-cargo add --git https://github.com/NewDawn0/tl.git
+git clone https://github.com/NewDawn0/tl
+nix profile install .
 ```
+#### Declaratively
+1. Add it as an input to your system flake as follows
+    ```nix
+    {
+      inputs = {
+        # Your other inputs ...
+        tl = {
+          url = "github:NewDawn0/tl";
+          inputs.nixpkgs.follows = "nixpkgs";
+          # Optional: If you use nix-systems or rust-overlay
+          inputs.nix-systems.follows = "nix-systems";
+          inputs.rust-overlay.follows = "rust-overlay";
+        };
+      };
+    }
+    ```
+2. Add this to your overlays to expose tl to your pkgs
+    ```nix
+    (final: prev: {
+      tl = inputs.tl.packages.${prev.system}.default;
+    })
+    ```
+3. Then you can either install it in your `environment.systemPackages` using 
+    ```nix
+    environment.systemPackages = with pkgs; [ tl ];
+    ```
+    or install it to your `home.packages`
+    ```nix
+    home.packages = with pkgs; [ tl ];
+    ```
 
 ## Program description courtesy of the built-in --help flag
 ```bash
