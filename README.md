@@ -46,13 +46,12 @@ nix profile install .
       };
     }
     ```
-2. Add this to your overlays to expose tl to your pkgs
+2. Add the overlay to expose tl to your pkgs
     ```nix
-    (final: prev: {
-      tl = inputs.tl.packages.${prev.system}.default;
-    })
+    overlays = [ inputs.tl.overlays.default ];
     ```
-3. Then you can either install it in your `environment.systemPackages` using 
+
+3. Then you can either install it in your `environment.systemPackages` using
     ```nix
     environment.systemPackages = with pkgs; [ tl ];
     ```
