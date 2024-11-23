@@ -23,7 +23,7 @@
         in {
           default = pkgs.rustPlatform.buildRustPackage {
             pname = "tl";
-            version = "0.0.1";
+            version = "1.0.0";
             buildInputs = with pkgs;
               if pkgs.stdenv.isDarwin then
                 with darwin; [
