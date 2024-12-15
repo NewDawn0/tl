@@ -25,7 +25,7 @@
             pname = "tl";
             version = "1.0.0";
             src = ./.;
-            cargoHash = "sha256-8XnIFAWMkpiCsEsg7FrRrqrLYzHVA38RmDYt9L6NfCk=";
+            cargoHash = "sha256-QEEqkcsJulZtMpVZXqy5D187nA+ksRya8ggPB9YWILU=";
             buildInputs = with pkgs;
               [ libiconv ] ++ lib.optional stdenv.hostPlatform.isDarwin
               darwin.apple_sdk.frameworks.SystemConfiguration;
