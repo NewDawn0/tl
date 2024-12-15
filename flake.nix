@@ -24,22 +24,22 @@
           default = pkgs.rustPlatform.buildRustPackage {
             pname = "tl";
             version = "1.0.0";
+            src = ./.;
+            cargoHash = "sha256-8XnIFAWMkpiCsEsg7FrRrqrLYzHVA38RmDYt9L6NfCk=";
             buildInputs = with pkgs;
-              if pkgs.stdenv.isDarwin then
-                with darwin; [
-                  libiconv
-                  apple_sdk.frameworks.SystemConfiguration
-                ]
-              else
-                [ libiconv ];
-
-            cargoLock.lockFile = ./Cargo.lock;
-            src = pkgs.lib.cleanSource ./.;
-            meta = with pkgs.lib; {
-              description = "A cli translator using google translate";
+              [ libiconv ] ++ lib.optional stdenv.hostPlatform.isDarwin
+              darwin.apple_sdk.frameworks.SystemConfiguration;
+            meta = {
+              description =
+                "A command-line translator powered by Google Translate";
+              longDescription = ''
+                This command-line tool leverages Google Translate to translate text quickly between languages.
+                It can be used to translate command-line output, allowing users to work with any language from the terminal.
+              '';
               homepage = "https://github.com/NewDawn0/tl";
-              maintainers = with maintainers; [ "NewDawn0" ];
-              license = licenses.mit;
+              license = pkgs.lib.licenses.mit;
+              maintainers = with pkgs.lib.maintainers; [ NewDawn0 ];
+              platforms = pkgs.lib.platforms.all;
             };
           };
         });
