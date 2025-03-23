@@ -1,66 +1,83 @@
 # TL - TransLator
+
 **A simple translator which is written in Rust**
 
 ## Usage and examples
+
 Basic usage
+
 ```bash
 tl <options> phrase
 ```
+
 To set the target language, simply add the `-t` or `--to` flag and either the language ISO code or the language name to the arguments. Both the language ISO codes and names can be shown when running `tl --help` and scrolling down to the language section
+
 ```bash
 tl This phrase will be translated to japanese -t ja
 ```
+
 Since tl accepts both ISO codes and language names the below example works as well.
+
 ```bash
 tl This phrase will be translated to japanese -t japanese
 ```
+
 To set the origin language, simply provide the "-f" or "--from" flag and again either the language ISO code or name.
 Note that to translate to English we don't have to set the target language as it is set to English by default nor do we have to set the origin language as it is set to Google's automatic recognition by default
 
 Arguments like the origin and the target language can be provided anywhere in the arguments, they don't have to specifically be at the beginning or end, whether that's a good or a bad thing is up to you to decide
 
 ## Installation
+
 ### Install using Cargo
+
 ```bash
-cargo install --git https://github.com/NewDawn0/tl
+cargo install --git https://github.com/NewDawn0/translate
 ```
+
 ### Install using Nix
+
 #### Imperatively
+
 ```bash
-git clone https://github.com/NewDawn0/tl
+git clone https://github.com/NewDawn0/translate
 nix profile install .
 ```
+
 #### Declaratively
+
 1. Add it as an input to your system flake as follows
-    ```nix
-    {
-      inputs = {
-        # Your other inputs ...
-        tl = {
-          url = "github:NewDawn0/tl";
-          inputs.nixpkgs.follows = "nixpkgs";
-          # Optional: If you use nix-systems or rust-overlay
-          inputs.nix-systems.follows = "nix-systems";
-          inputs.rust-overlay.follows = "rust-overlay";
-        };
-      };
-    }
-    ```
+   ```nix
+   {
+     inputs = {
+       # Your other inputs ...
+       tl = {
+         url = "github:NewDawn0/tl";
+         inputs.nixpkgs.follows = "nixpkgs";
+         # Optional: If you use nix-systems or rust-overlay
+         inputs.nix-systems.follows = "nix-systems";
+         inputs.rust-overlay.follows = "rust-overlay";
+       };
+     };
+   }
+   ```
 2. Add the overlay to expose tl to your pkgs
-    ```nix
-    overlays = [ inputs.tl.overlays.default ];
-    ```
+
+   ```nix
+   overlays = [ inputs.tl.overlays.default ];
+   ```
 
 3. Then you can either install it in your `environment.systemPackages` using
-    ```nix
-    environment.systemPackages = with pkgs; [ tl ];
-    ```
-    or install it to your `home.packages`
-    ```nix
-    home.packages = with pkgs; [ tl ];
-    ```
+   ```nix
+   environment.systemPackages = with pkgs; [ tl ];
+   ```
+   or install it to your `home.packages`
+   ```nix
+   home.packages = with pkgs; [ tl ];
+   ```
 
 ## Program description courtesy of the built-in --help flag
+
 ```bash
 NAME
     TL (by NewDawn0)
@@ -132,6 +149,7 @@ LANGUAGES
 ```
 
 ## Changelog
+
 - **0v.1.7** Added library API
 - **v0.1.6** Escaped all encodings implicitly
 - **v0.1.5** Fixed apostrophe bug in French
