@@ -9,6 +9,7 @@
     };
     packages = utils.lib.eachSystem { } (pkgs: {
       default = pkgs.rustPlatform.buildRustPackage {
+        name = "translate";
         pname = "tl";
         version = "1.0.0";
         src = ./.;
