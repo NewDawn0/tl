@@ -10,8 +10,7 @@
     packages = utils.lib.eachSystem { } (pkgs: {
       default = pkgs.rustPlatform.buildRustPackage {
         name = "translate";
-        pname = "tl";
-        version = "1.0.0";
+        version = "2.0.0";
         src = ./.;
         useFetchCargoVendor = true;
         cargoHash = "sha256-xMA2bus+ElNQhc9E7aK7XC1Zfuu8p0TW9fkWfv5z2AA=";
